@@ -1,0 +1,10 @@
+version: '3'
+services:
+  jenkins-docker:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: jenkins-docker:v1.0.0
+    container_name: jenkins-docker
+    ports:
+      - "9999:9999"

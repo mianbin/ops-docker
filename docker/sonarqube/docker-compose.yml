@@ -1,0 +1,28 @@
+version: '3'
+services:
+  postgres-db:
+    image: postgres
+    container_name: postgres-sonarqube-db
+    ports:
+      - 5432:5432
+    networks:
+      - sonarqube-net
+    environment:
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+  sonarqube:
+    image: sonarqube:8.9.6-community
+    container_name: sonarqube
+    depends_on:
+      - postgres-sonarqube-db
+    ports:
+      - 9000:9000
+    networks:
+      - sonarqube-net
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://postgres-sonarqube-db:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+networks:
+  sonarqube-net:
+    driver: bridge
